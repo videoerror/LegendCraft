@@ -9,51 +9,51 @@ using JetBrains.Annotations;
 
 namespace fCraft
 {
-    sealed class PacketReader : BinaryReader
-    {
-        public PacketReader([NotNull] Stream stream) :
-            base(stream) { }
+	sealed class PacketReader : BinaryReader
+	{
+		public PacketReader([NotNull] Stream stream) :
+			base(stream) { }
 
 
-        public OpCode ReadOpCode()
-        {
-            return (OpCode)ReadByte();
-        }
+		public OpCode ReadOpCode()
+		{
+			return(OpCode)ReadByte();
+		}
 
 
-        public override short ReadInt16()
-        {
-            return IPAddress.NetworkToHostOrder(base.ReadInt16());
-        }
+		public override short ReadInt16()
+		{
+			return IPAddress.NetworkToHostOrder(base.ReadInt16());
+		}
 
 
-        public override int ReadInt32()
-        {
-            return IPAddress.NetworkToHostOrder(base.ReadInt32());
-        }
+		public override int ReadInt32()
+		{
+			return IPAddress.NetworkToHostOrder(base.ReadInt32());
+		}
 
-        char[] characters = new char[64];
-        public override string ReadString()
-        {
-            int length = 0;
-            byte[] data = ReadBytes(64);
-            
-            for (int i = 63; i >= 0; i--)
-            {
-                byte code = data[i];
-                if (length == 0 && !(code == 0 || code == 0x20))
-                    length = i + 1;
-                
-                // Treat code as an index in code page 437
-                if (code < 0x20) {
-                    characters[i] = Chat.ControlCharReplacements[code];
-                } else if (code < 0x7F) {
-                    characters[i] = (char)code;
-                } else {
-                    characters[i] = Chat.ExtendedCharReplacements[code - 0x7F];
-                }
-            }
-            return new string( characters, 0, length );
-        }
-    }
+		char[] characters = new char[64];
+		public override string ReadString()
+		{
+			int length = 0;
+			byte[] data = ReadBytes(64);
+			
+			for(int i = 63; i >= 0; i--)
+			{
+				byte code = data[i];
+				if(length == 0 && !(code == 0 || code == 0x20))
+					length = i + 1;
+				
+				// Treat code as an index in code page 437
+				if(code < 0x20) {
+					characters[i] = Chat.ControlCharReplacements[code];
+				} else if(code < 0x7F) {
+					characters[i] = (char)code;
+				} else {
+					characters[i] = Chat.ExtendedCharReplacements[code - 0x7F];
+				}
+			}
+			return new string(characters, 0, length);
+		}
+	}
 }

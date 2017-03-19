@@ -1,4 +1,4 @@
-﻿//Copyright (C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
+﻿//Copyright(C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -20,28 +20,28 @@ using System.Text;
 ///<Summary> Spell enum, to be used with Spell Physics </Summary>
 namespace fCraft
 {
-    public enum Spell : byte
-    {
-        Polymorph = 1,
+	public enum Spell : byte
+	{
+		Polymorph = 1,
 
-        Impersonation = 2,
+		Impersonation = 2,
 
-        ExplodingTree = 3,
+		ExplodingTree = 3,
 
-        FrostNova = 4,
+		FrostNova = 4,
 
-        Flash = 5,
+		Flash = 5,
 
-        Cleanse = 6,
+		Cleanse = 6,
 
-        Shield = 7,
+		Shield = 7,
 
-        Inferno = 8,
+		Inferno = 8,
 
-        SelfDestruct = 9,
+		SelfDestruct = 9,
 
-        Silence = 10,
+		Silence = 10,
 
-        Freeze = 11,
-    }
+		Freeze = 11,
+	}
 }

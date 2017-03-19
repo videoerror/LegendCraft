@@ -1,4 +1,4 @@
-﻿//Copyright (C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
+﻿//Copyright(C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -22,234 +22,234 @@ using Util = RandomMaze.MazeUtil;
 
 namespace fCraft
 {
-    public class BlockSink : PhysicsTask
-    {
-        private const int Delay = 200;
-        private Vector3I _pos; //tnt position
-        private int _nextPos;
-        private bool _firstMove = true;
-        private Block type;
-        public BlockSink(World world, Vector3I position, Block Type)
-            : base(world)
-        {
-            _pos = position;
-            _nextPos = position.Z - 1;
-            type = Type;
-        }
+	public class BlockSink : PhysicsTask
+	{
+		private const int Delay = 200;
+		private Vector3I _pos; //tnt position
+		private int _nextPos;
+		private bool _firstMove = true;
+		private Block type;
+		public BlockSink(World world, Vector3I position, Block Type)
+			: base(world)
+		{
+			_pos = position;
+			_nextPos = position.Z - 1;
+			type = Type;
+		}
 
-        protected override int PerformInternal()
-        {
-            lock (_world.SyncRoot)
-            {
-                if (_world.waterPhysics)
-                {
-                    if (_firstMove)
-                    {
-                        if (_world.Map.GetBlock(_pos) != type)
-                        {
-                            return 0;
-                        }
-                        if (_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos) == Block.Water)
-                        {
-                            _world.Map.QueueUpdate(new BlockUpdate(null, _pos, Block.Water));
-                            _world.Map.QueueUpdate(new BlockUpdate(null, (short)_pos.X, (short)_pos.Y, (short)_nextPos, type));
-                            _nextPos--;
-                            _firstMove = false;
-                            return Delay;
-                        }
-                    }
-                    if (_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos + 1) != type)
-                    {
-                        return 0;
-                    }
-                    if (_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos) == Block.Water)
-                    {
-                        _world.Map.QueueUpdate(new BlockUpdate(null, (short)_pos.X, (short)_pos.Y, (short)(_nextPos + 1), Block.Water));
-                        _world.Map.QueueUpdate(new BlockUpdate(null, (short)_pos.X, (short)_pos.Y, (short)_nextPos, type));
-                        _nextPos--;
-                    }
-                }
-                return Delay;
-            }
-        }
-    }
-    public class BlockFloat : PhysicsTask
-    {
-        private const int Delay = 200;
-        private Vector3I _pos;
-        private int _nextPos;
-        private bool _firstMove = true;
-        private Block type;
+		protected override int PerformInternal()
+		{
+			lock(_world.SyncRoot)
+			{
+				if(_world.waterPhysics)
+				{
+					if(_firstMove)
+					{
+						if(_world.Map.GetBlock(_pos) != type)
+						{
+							return 0;
+						}
+						if(_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos) == Block.Water)
+						{
+							_world.Map.QueueUpdate(new BlockUpdate(null, _pos, Block.Water));
+							_world.Map.QueueUpdate(new BlockUpdate(null,(short)_pos.X,(short)_pos.Y,(short)_nextPos, type));
+							_nextPos--;
+							_firstMove = false;
+							return Delay;
+						}
+					}
+					if(_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos + 1) != type)
+					{
+						return 0;
+					}
+					if(_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos) == Block.Water)
+					{
+						_world.Map.QueueUpdate(new BlockUpdate(null,(short)_pos.X,(short)_pos.Y,(short)(_nextPos + 1), Block.Water));
+						_world.Map.QueueUpdate(new BlockUpdate(null,(short)_pos.X,(short)_pos.Y,(short)_nextPos, type));
+						_nextPos--;
+					}
+				}
+				return Delay;
+			}
+		}
+	}
+	public class BlockFloat : PhysicsTask
+	{
+		private const int Delay = 200;
+		private Vector3I _pos;
+		private int _nextPos;
+		private bool _firstMove = true;
+		private Block type;
 
-        public BlockFloat(World world, Vector3I position, Block Type)
-            : base(world)
-        {
-            _pos = position;
-            _nextPos = position.Z + 1;
-            type = Type;
-        }
+		public BlockFloat(World world, Vector3I position, Block Type)
+			: base(world)
+		{
+			_pos = position;
+			_nextPos = position.Z + 1;
+			type = Type;
+		}
 
-        protected override int PerformInternal()
-        {
-            lock (_world.SyncRoot)
-            {
-                if (_world.waterPhysics)
-                {
-                    if (_firstMove)
-                    {
-                        if (_world.Map.GetBlock(_pos) != type)
-                        {
-                            return 0;
-                        }
-                        if (_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos) == Block.Water)
-                        {
-                            _world.Map.QueueUpdate(new BlockUpdate(null, _pos, Block.Water));
-                            _world.Map.QueueUpdate(new BlockUpdate(null, (short)_pos.X, (short)_pos.Y, (short)_nextPos, type));
-                            _nextPos++;
-                            _firstMove = false;
-                            return Delay;
-                        }
-                    }
-                    if (_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos - 1) != type)
-                    {
-                        return 0;
-                    }
-                    if (_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos) == Block.Water)
-                    {
-                        _world.Map.QueueUpdate(new BlockUpdate(null, (short)_pos.X, (short)_pos.Y, (short)(_nextPos - 1), Block.Water));
-                        _world.Map.QueueUpdate(new BlockUpdate(null, (short)_pos.X, (short)_pos.Y, (short)_nextPos, type));
-                        _nextPos++;
-                    }
-                }
-                return Delay;
-            }
-        }
-    }
-    class WaterPhysics
-    {
-        public static Thread waterThread;
+		protected override int PerformInternal()
+		{
+			lock(_world.SyncRoot)
+			{
+				if(_world.waterPhysics)
+				{
+					if(_firstMove)
+					{
+						if(_world.Map.GetBlock(_pos) != type)
+						{
+							return 0;
+						}
+						if(_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos) == Block.Water)
+						{
+							_world.Map.QueueUpdate(new BlockUpdate(null, _pos, Block.Water));
+							_world.Map.QueueUpdate(new BlockUpdate(null,(short)_pos.X,(short)_pos.Y,(short)_nextPos, type));
+							_nextPos++;
+							_firstMove = false;
+							return Delay;
+						}
+					}
+					if(_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos - 1) != type)
+					{
+						return 0;
+					}
+					if(_world.Map.GetBlock(_pos.X, _pos.Y, _nextPos) == Block.Water)
+					{
+						_world.Map.QueueUpdate(new BlockUpdate(null,(short)_pos.X,(short)_pos.Y,(short)(_nextPos - 1), Block.Water));
+						_world.Map.QueueUpdate(new BlockUpdate(null,(short)_pos.X,(short)_pos.Y,(short)_nextPos, type));
+						_nextPos++;
+					}
+				}
+				return Delay;
+			}
+		}
+	}
+	class WaterPhysics
+	{
+		public static Thread waterThread;
 
-        #region Tower
-        public static void towerInit(object sender, Events.PlayerPlacedBlockEventArgs e)
-        {
-            World world = e.Player.World;
-            if (e.Player.towerMode)
-            {
-                if (world.Map != null && world.IsLoaded)
-                {
-                    if (e.Context == BlockChangeContext.Manual)
-                    {
-                        if (e.NewBlock == Block.Iron)
-                        {
-                            makeTower(world, e.Player, e.Coords);
-                        }
-                    }
-                }
-            }
-        }
-        
-        static void makeTower(World world, Player player, Vector3I coords) {
-            waterThread = new Thread(new ThreadStart(
-                delegate
-                {
-                    if (player.TowerCache != null)
-                    {
-                        world.Map.QueueUpdate(new BlockUpdate(null, player.towerOrigin, Block.Air));
-                        player.towerOrigin = coords;
-                        foreach (Vector3I block in player.TowerCache.Values)
-                        {
-                            player.Send(PacketWriter.MakeSetBlock(block, Block.Air));
-                        }
-                        player.TowerCache.Clear();
-                    }
-                    player.towerOrigin = coords;
-                    player.TowerCache = new System.Collections.Concurrent.ConcurrentDictionary<string, Vector3I>();
-                    for (int z = coords.Z; z <= world.Map.Height; z++)
-                    {
-                        Thread.Sleep(250);
-                        if (world.Map != null && world.IsLoaded)
-                        {
-                            if (world.Map.GetBlock(coords.X, coords.Y, z + 1) != Block.Air
-                                || world.Map.GetBlock(coords) != Block.Iron
-                                || player.towerOrigin != coords
-                                || !player.towerMode)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                Vector3I tower = new Vector3I(coords.X, coords.Y, z + 1);
-                                player.TowerCache.TryAdd(tower.ToString(), tower);
-                                player.Send(PacketWriter.MakeSetBlock(tower, Block.Water));
-                            }
-                        }
-                    }
-                })); waterThread.Start();
-        }
+		#region Tower
+		public static void towerInit(object sender, Events.PlayerPlacedBlockEventArgs e)
+		{
+			World world = e.Player.World;
+			if(e.Player.towerMode)
+			{
+				if(world.Map != null && world.IsLoaded)
+				{
+					if(e.Context == BlockChangeContext.Manual)
+					{
+						if(e.NewBlock == Block.Iron)
+						{
+							makeTower(world, e.Player, e.Coords);
+						}
+					}
+				}
+			}
+		}
+		
+		static void makeTower(World world, Player player, Vector3I coords) {
+			waterThread = new Thread(new ThreadStart(
+				delegate
+				{
+					if(player.TowerCache != null)
+					{
+						world.Map.QueueUpdate(new BlockUpdate(null, player.towerOrigin, Block.Air));
+						player.towerOrigin = coords;
+						foreach(Vector3I block in player.TowerCache.Values)
+						{
+							player.Send(PacketWriter.MakeSetBlock(block, Block.Air));
+						}
+						player.TowerCache.Clear();
+					}
+					player.towerOrigin = coords;
+					player.TowerCache = new System.Collections.Concurrent.ConcurrentDictionary<string, Vector3I>();
+					for(int z = coords.Z; z <= world.Map.Height; z++)
+					{
+						Thread.Sleep(250);
+						if(world.Map != null && world.IsLoaded)
+						{
+							if(world.Map.GetBlock(coords.X, coords.Y, z + 1) != Block.Air
+								|| world.Map.GetBlock(coords) != Block.Iron
+								|| player.towerOrigin != coords
+								|| !player.towerMode)
+							{
+								break;
+							}
+							else
+							{
+								Vector3I tower = new Vector3I(coords.X, coords.Y, z + 1);
+								player.TowerCache.TryAdd(tower.ToString(), tower);
+								player.Send(PacketWriter.MakeSetBlock(tower, Block.Water));
+							}
+						}
+					}
+				})); waterThread.Start();
+		}
 
-        public static void towerRemove(object sender, Events.PlayerClickingEventArgs e)
-        {
-            World world = e.Player.World;
-            if (e.Action == ClickAction.Delete)
-            {
-                if (e.Coords == e.Player.towerOrigin)
-                {
-                    if (e.Player.TowerCache != null)
-                    {
-                        if (e.Block == Block.Iron)
-                        {
-                            e.Player.towerOrigin = new Vector3I();
-                            foreach (Vector3I block in e.Player.TowerCache.Values)
-                            {
-                                e.Player.Send(PacketWriter.MakeSetBlock(block, world.Map.GetBlock(block)));
-                            }
-                            e.Player.TowerCache.Clear();
-                        }
-                    }
-                }
-            }
-        }
-        #endregion
+		public static void towerRemove(object sender, Events.PlayerClickingEventArgs e)
+		{
+			World world = e.Player.World;
+			if(e.Action == ClickAction.Delete)
+			{
+				if(e.Coords == e.Player.towerOrigin)
+				{
+					if(e.Player.TowerCache != null)
+					{
+						if(e.Block == Block.Iron)
+						{
+							e.Player.towerOrigin = new Vector3I();
+							foreach(Vector3I block in e.Player.TowerCache.Values)
+							{
+								e.Player.Send(PacketWriter.MakeSetBlock(block, world.Map.GetBlock(block)));
+							}
+							e.Player.TowerCache.Clear();
+						}
+					}
+				}
+			}
+		}
+		#endregion
 
-        public static void drownCheck(SchedulerTask task)
-        {
-            try
-            {
-                foreach (Player p in Server.Players.Where(p=> !p.Immortal))
-                {
-                    if (p.World != null) //ignore console
-                    {
-                        if (p.World.waterPhysics)
-                        {
-                            Position pos = new Position(
-                                (short)(p.Position.X / 32),
-                                (short)(p.Position.Y / 32),
-                                (short)((p.Position.Z + 1) / 32)
-                            );
-                            if (p.WorldMap.GetBlock(pos.X, pos.Y, pos.Z) == Block.Water)
-                            {
-                                if (p.DrownTime == null || (DateTime.UtcNow - p.DrownTime).TotalSeconds > 33)
-                                {
-                                    p.DrownTime = DateTime.UtcNow;
-                                }
-                                if ((DateTime.UtcNow - p.DrownTime).TotalSeconds > 30)
-                                {
-                                    p.TeleportTo(p.WorldMap.Spawn);
-                                    p.World.Players.Message("{0}&S drowned and died", p.ClassyName);
-                                }
-                            }
-                            else
-                            {
-                                p.DrownTime = DateTime.UtcNow;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(LogType.SeriousError, "" + ex);
-            }
-        }
-    }
+		public static void drownCheck(SchedulerTask task)
+		{
+			try
+			{
+				foreach(Player p in Server.Players.Where(p=> !p.Immortal))
+				{
+					if(p.World != null) //ignore console
+					{
+						if(p.World.waterPhysics)
+						{
+							Position pos = new Position(
+								(short)(p.Position.X / 32),
+								(short)(p.Position.Y / 32),
+								(short)((p.Position.Z + 1) / 32)
+							);
+							if(p.WorldMap.GetBlock(pos.X, pos.Y, pos.Z) == Block.Water)
+							{
+								if(p.DrownTime == null ||(DateTime.UtcNow - p.DrownTime).TotalSeconds > 33)
+								{
+									p.DrownTime = DateTime.UtcNow;
+								}
+								if((DateTime.UtcNow - p.DrownTime).TotalSeconds > 30)
+								{
+									p.TeleportTo(p.WorldMap.Spawn);
+									p.World.Players.Message("{0}&S drowned and died", p.ClassyName);
+								}
+							}
+							else
+							{
+								p.DrownTime = DateTime.UtcNow;
+							}
+						}
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				Logger.Log(LogType.SeriousError, "" + ex);
+			}
+		}
+	}
 }

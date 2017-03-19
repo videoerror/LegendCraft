@@ -1,4 +1,4 @@
-﻿//Copyright (C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
+﻿//Copyright(C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-//Copyright (C) <2012> Lao Tszy (lao_tszy@yahoo.co.uk)
+//Copyright(C) <2012> Lao Tszy(lao_tszy@yahoo.co.uk)
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,8 +37,8 @@ namespace fCraft
 
 		public bool Contains(T t)
 		{
-			for (int i=0; i<(_full?_a.Length:_current); ++i)
-				if (t.Equals(_a[i]))
+			for(int i=0; i<(_full?_a.Length:_current); ++i)
+				if(t.Equals(_a[i]))
 					return true;
 			return false;
 		}
@@ -46,7 +46,7 @@ namespace fCraft
 		public void Add(T t)
 		{
 			_a[_current] = t;
-			if (++_current>=_a.Length)
+			if(++_current>=_a.Length)
 			{
 				_current = 0;
 				_full = true;
@@ -114,16 +114,16 @@ namespace fCraft
 		private byte[,] _initialState;
 		private CircularBuffer<int> _stateHashes = new CircularBuffer<int>(LastStateHashesSize);
 
-		public bool Stopped { get { lock (_life2d) { return State.Stopped == _state; } } }
+		public bool Stopped { get { lock(_life2d) { return State.Stopped == _state; } } }
 
-		public Block Normal { get { lock (_life2d) { return _normal; } } set { lock (_life2d) { _normal = value; } } }
-		public Block Empty { get { lock (_life2d) { return _empty; } } set { lock (_life2d) { _empty = value; } } }
-		public Block Dead { get { lock (_life2d) { return _dead; } } set { lock (_life2d) { _dead = value; } } }
-		public Block Newborn { get { lock (_life2d) { return _newborn; } } set { lock (_life2d) { _newborn = value; } } }
-		public int HalfStepDelay { get { lock (_life2d) { return _halfStepDelay; } } set { lock (_life2d) { _halfStepDelay = value; } } }
-		public int Delay { get { lock (_life2d) { return _delay; } } set { lock (_life2d) { _delay = value; } } }
-		public bool Torus { get { lock (_life2d) { return _life2d.Torus; } } set { lock (_life2d) { _life2d.Torus = value; } } }
-		public AutoResetMethod AutoReset { get { lock (_life2d) { return _autoReset; } } set { lock (_life2d) { _autoReset = value; } } }
+		public Block Normal { get { lock(_life2d) { return _normal; } } set { lock(_life2d) { _normal = value; } } }
+		public Block Empty { get { lock(_life2d) { return _empty; } } set { lock(_life2d) { _empty = value; } } }
+		public Block Dead { get { lock(_life2d) { return _dead; } } set { lock(_life2d) { _dead = value; } } }
+		public Block Newborn { get { lock(_life2d) { return _newborn; } } set { lock(_life2d) { _newborn = value; } } }
+		public int HalfStepDelay { get { lock(_life2d) { return _halfStepDelay; } } set { lock(_life2d) { _halfStepDelay = value; } } }
+		public int Delay { get { lock(_life2d) { return _delay; } } set { lock(_life2d) { _delay = value; } } }
+		public bool Torus { get { lock(_life2d) { return _life2d.Torus; } } set { lock(_life2d) { _life2d.Torus = value; } } }
+		public AutoResetMethod AutoReset { get { lock(_life2d) { return _autoReset; } } set { lock(_life2d) { _autoReset = value; } } }
 
 		public string CreatorName { get; set; }
 		public string MinRankToChange { get; set; }
@@ -132,19 +132,19 @@ namespace fCraft
 		{
 			_map = map;
 			_bounds=new BoundingBox(marks[0], marks[1]);
-			if (_bounds.Dimensions.X == 1 && _bounds.Dimensions.Y > 1 && _bounds.Dimensions.Z > 1)
+			if(_bounds.Dimensions.X == 1 && _bounds.Dimensions.Y > 1 && _bounds.Dimensions.Z > 1)
 			{
 				_orientation = Orientation.X;
 				_life2d = new Life2d(_bounds.Dimensions.Y, _bounds.Dimensions.Z);
 				_coords.X = _bounds.XMin;
 			}
-			else if (_bounds.Dimensions.X > 1 && _bounds.Dimensions.Y == 1 && _bounds.Dimensions.Z > 1)
+			else if(_bounds.Dimensions.X > 1 && _bounds.Dimensions.Y == 1 && _bounds.Dimensions.Z > 1)
 			{
 				_orientation = Orientation.Y;
 				_life2d = new Life2d(_bounds.Dimensions.X, _bounds.Dimensions.Z);
 				_coords.Y = _bounds.YMin;
 			}
-			else if (_bounds.Dimensions.X > 1 && _bounds.Dimensions.Y > 1 && _bounds.Dimensions.Z == 1)
+			else if(_bounds.Dimensions.X > 1 && _bounds.Dimensions.Y > 1 && _bounds.Dimensions.Z == 1)
 			{
 				_orientation = Orientation.Z;
 				_life2d = new Life2d(_bounds.Dimensions.X, _bounds.Dimensions.Y);
@@ -153,7 +153,7 @@ namespace fCraft
 			else
 				throw new ArgumentException("bounds must be a 2d rectangle");
 
-			if (_bounds.Dimensions.X*_bounds.Dimensions.Y*_bounds.Dimensions.Z>MaxSize)
+			if(_bounds.Dimensions.X*_bounds.Dimensions.Y*_bounds.Dimensions.Z>MaxSize)
 				throw new ArgumentException("The life if too large. Width*Length must be less or equal than "+MaxSize);
 
 			CheckPermissionsToDraw(creator);
@@ -170,23 +170,23 @@ namespace fCraft
 			_delay = DefaultDelay;
 			Torus = false;
 			_autoReset = AutoResetMethod.ToRandom;
-            _initialState = _life2d.GetArrayCopy();
+			_initialState = _life2d.GetArrayCopy();
 		}
 
 		private void CheckPermissionsToDraw(Player creator)
 		{
-			for (int i=_bounds.XMin; i<=_bounds.XMax; ++i)
-				for (int j=_bounds.YMin; j<=_bounds.YMax; ++j)
-					for (int k=_bounds.ZMin; k<=_bounds.ZMax; ++k)
-						if (creator.CanPlace(_map, new Vector3I(i, j, k), DefaultBlocks[EmptyIdx], BlockChangeContext.Physics)!=CanPlaceResult.Allowed)
+			for(int i=_bounds.XMin; i<=_bounds.XMax; ++i)
+				for(int j=_bounds.YMin; j<=_bounds.YMax; ++j)
+					for(int k=_bounds.ZMin; k<=_bounds.ZMax; ++k)
+						if(creator.CanPlace(_map, new Vector3I(i, j, k), DefaultBlocks[EmptyIdx], BlockChangeContext.Physics)!=CanPlaceResult.Allowed)
 							throw new ArgumentException("This life intersects with prohibited zones/blocks. Creation denied.");
 		}
 
 		public void Stop()
 		{
-			lock (_life2d)
+			lock(_life2d)
 			{
-				if (!Stopped)
+				if(!Stopped)
 				{
 					_state = State.Stopped;
 				}
@@ -195,15 +195,15 @@ namespace fCraft
 
 		public void Start()
 		{
-			lock (_life2d)
+			lock(_life2d)
 			{
-				if (!Stopped)
+				if(!Stopped)
 					return;
 				_state = State.Starting;
 			}
 			
 			World w = _map.World;
-			if (null == w)
+			if(null == w)
 			{
 				Logger.Log(LogType.Error, "Life: cant start life in a map without a world");
 				return;
@@ -213,13 +213,13 @@ namespace fCraft
 
 		public void Resume() //the map with this life was just loaded from the file
 		{
-			lock (_life2d)
+			lock(_life2d)
 			{
-				if (Stopped)
+				if(Stopped)
 					return;
 			}
 			World w = _map.World;
-			if (null == w)
+			if(null == w)
 			{
 				Logger.Log(LogType.Error, "Life: cant resume life in a map without a world");
 				return;
@@ -240,20 +240,20 @@ namespace fCraft
 		private void ReadToArray(ref int i, ref int j, int minI, int maxI, int minJ, int maxJ)
 		{
 			_life2d.Clear();
-			for (i = minI; i <= maxI; ++i)
-				for (j = minJ; j <= maxJ; ++j)
+			for(i = minI; i <= maxI; ++i)
+				for(j = minJ; j <= maxJ; ++j)
 				{
-					if (_empty != _map.GetBlock(_coords))
+					if(_empty != _map.GetBlock(_coords))
 						_life2d.Set(i - minI, j - minJ);
 				}
 		}
 
 		private void Draw(ref int i, ref int j, int minI, int maxI, int minJ, int maxJ)
 		{
-			for (i = minI; i <= maxI; ++i)
-				for (j = minJ; j <= maxJ; ++j)
+			for(i = minI; i <= maxI; ++i)
+				for(j = minJ; j <= maxJ; ++j)
 				{
-					switch (_life2d.Get(i-minI, j-minJ))
+					switch(_life2d.Get(i-minI, j-minJ))
 					{
 						case Life2d.Nothing:
 							SetBlock(_empty);
@@ -273,13 +273,13 @@ namespace fCraft
 
 		private void SetBlock(Block b)
 		{
-			if (_map.GetBlock(_coords)!=b)
+			if(_map.GetBlock(_coords)!=b)
 				_map.QueueUpdate(new BlockUpdate(null, _coords, b));
 		}
 
 		private void ReadToArrayByOrientation()
 		{
-			switch (_orientation)
+			switch(_orientation)
 			{
 				case Orientation.X:
 					ReadToArray(ref _coords.Y, ref _coords.Z, _bounds.YMin, _bounds.YMax, _bounds.ZMin, _bounds.ZMax);
@@ -294,7 +294,7 @@ namespace fCraft
 		}
 		private void DrawByOrientation()
 		{
-			switch (_orientation)
+			switch(_orientation)
 			{
 				case Orientation.X:
 					Draw(ref _coords.Y, ref _coords.Z, _bounds.YMin, _bounds.YMax, _bounds.ZMin, _bounds.ZMax);
@@ -310,9 +310,9 @@ namespace fCraft
 
 		private int PerformInternal()
 		{
-			lock (_life2d)
+			lock(_life2d)
 			{
-				switch (_state)
+				switch(_state)
 				{
 					case State.Stopped:
 						return 0;
@@ -327,17 +327,17 @@ namespace fCraft
 					case State.HalfStep:
 						_life2d.HalfStep();
 						_state = State.FinalizedStep;
-						if (_halfStepDelay > 0)
+						if(_halfStepDelay > 0)
 						{
 							DrawByOrientation();
 							return _halfStepDelay;
 						}
 						goto case State.FinalizedStep; //fall through c# stile
 					case State.FinalizedStep:
-						_state = _life2d.FinalizeStep() ? State.HalfStep : (_autoReset!=AutoResetMethod.None ? State.Resetting : State.Stopped);
-						if (_autoReset!=AutoResetMethod.None && State.HalfStep==_state)
+						_state = _life2d.FinalizeStep() ? State.HalfStep :(_autoReset!=AutoResetMethod.None ? State.Resetting : State.Stopped);
+						if(_autoReset!=AutoResetMethod.None && State.HalfStep==_state)
 						{//check short periodical repetition
-							if (_stateHashes.Contains(_life2d.Hash))
+							if(_stateHashes.Contains(_life2d.Hash))
 								_state = State.Resetting;
 							else
 								_stateHashes.Add(_life2d.Hash);
@@ -346,11 +346,11 @@ namespace fCraft
 						return _delay;
 					
 					case State.Resetting:
-					    if (_autoReset==AutoResetMethod.None) //has been just changed?
-					    {
-					    	_state = State.Stopped;
-					    	return 0;
-					    }
+						if(_autoReset==AutoResetMethod.None) //has been just changed?
+						{
+							_state = State.Stopped;
+							return 0;
+						}
 						_life2d.Clear();
 						_stateHashes.Clear();
 						DrawByOrientation();
@@ -358,7 +358,7 @@ namespace fCraft
 						return LongDelay;
 
 					case State.Reinit:
-						if (_autoReset == AutoResetMethod.None) //has been just changed?
+						if(_autoReset == AutoResetMethod.None) //has been just changed?
 						{
 							_state = State.Stopped;
 							return 0;
@@ -374,10 +374,10 @@ namespace fCraft
 
 		private void Reinit()
 		{
-			switch (_autoReset)
+			switch(_autoReset)
 			{
 				case AutoResetMethod.ToInitial:
-					if (null == _initialState)
+					if(null == _initialState)
 						goto case AutoResetMethod.ToRandom;
 					_life2d.SetState(_initialState);
 					return;
@@ -441,7 +441,7 @@ namespace fCraft
 
 			public SerializedData(Life2DZone life)
 			{
-				lock (life._life2d)
+				lock(life._life2d)
 				{
 					Bounds = life._bounds;
 					Orient = life._orientation;
@@ -468,7 +468,7 @@ namespace fCraft
 			{
 				//the life is not running, no locks needed
 				life._bounds = Bounds;
-				//we only will be needed one assignment depending on the orientation (see the public life constructor) 
+				//we only will be needed one assignment depending on the orientation(see the public life constructor) 
 				//but it doesnt hurt to assign all variables, which is shorter than a switch statement
 				life._coords.X = Bounds.XMin;
 				life._coords.Y = Bounds.YMin;
@@ -499,20 +499,20 @@ namespace fCraft
 				int idx = 0;
 				dim0 = a.GetLength(0);
 				dim1 = a.GetLength(1);
-				for (int i = 0; i < dim0; ++i)
-					for (int j = 0; j < dim1; ++j)
+				for(int i = 0; i < dim0; ++i)
+					for(int j = 0; j < dim1; ++j)
 						aa[idx++] = a[i, j];
 				return aa;
 			}
 
 			private static byte[,] To2DArray(byte[] a, int dim0, int dim1)
 			{
-				if (a.Length!=dim0*dim1)
+				if(a.Length!=dim0*dim1)
 					throw new ArgumentException("wrong dimensions");
 				byte[,] aa=new byte[dim0, dim1];
 				int idx = 0;
-				for (int i = 0; i < dim0; ++i)
-					for (int j = 0; j < dim1; ++j)
+				for(int i = 0; i < dim0; ++i)
+					for(int j = 0; j < dim1; ++j)
 						a[idx++] = aa[i, j];
 				return aa;
 			}

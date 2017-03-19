@@ -5,18 +5,18 @@ using System.Text;
 
 namespace fCraft
 {
-    public enum GameMode
-    {
-        FFA,
-        CaptureTheFlag,
-        GunGame,
-        ZombieSurvival,
-        BotSurvival,
-        MineField,
-        Football,
-        MineChallenge,
-        TeamDeathMatch,
-        Infection,
-        NULL 
-    }
+	public enum GameMode
+	{
+		FFA,
+		CaptureTheFlag,
+		GunGame,
+		ZombieSurvival,
+		BotSurvival,
+		MineField,
+		Football,
+		MineChallenge,
+		TeamDeathMatch,
+		Infection,
+		NULL 
+	}
 }

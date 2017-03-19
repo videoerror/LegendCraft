@@ -1,4 +1,4 @@
-﻿//Copyright (C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
+﻿//Copyright(C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -50,24 +50,24 @@ public class PhysScheduler
 		{
 			WaitHandle[] handles = new WaitHandle[] { _continue, _stop };
 			int timeout = Timeout.Infinite;
-			for (; ; )
+			for(; ;)
 			{
 				int w = WaitHandle.WaitAny(handles, timeout);
-				if (w == 1) //stop
+				if(w == 1) //stop
 					break;
 				
 				PhysicsTask task;
 				//check if there is a due task
-				lock (_tasks)
+				lock(_tasks)
 				{
-					if (_tasks.Size == 0) //sanity check
+					if(_tasks.Size == 0) //sanity check
 					{
 						timeout = Timeout.Infinite;
 						continue; //nothing to do
 					}
 					task = _tasks.Head();
 					Int64 now = _watch.ElapsedMilliseconds;
-					if (task.DueTime <= now) //due time!
+					if(task.DueTime <= now) //due time!
 						_tasks.RemoveHead();
 					else
 					{
@@ -81,16 +81,16 @@ public class PhysScheduler
 				{
 					delay = task.Deleted ? 0 : task.Perform(); //dont perform deleted tasks 
 				}
-				catch (Exception e)
+				catch(Exception e)
 				{
 					delay = 0;
 					Logger.Log(LogType.Error, "ProcessPhysicsTasks: " + e);
 				}
 				//decide what's next
-				lock (_tasks)
+				lock(_tasks)
 				{
 					Int64 now = _watch.ElapsedMilliseconds;
-					if (delay > 0)
+					if(delay > 0)
 					{
 						task.DueTime = now + delay;
 						_tasks.Add(task);
@@ -102,11 +102,11 @@ public class PhysScheduler
 
 		public void Start()
 		{
-			if (null!=_thread)
+			if(null!=_thread)
 			{
 				return;
 			}
-			if (_tasks.Size>0)
+			if(_tasks.Size>0)
 				_continue.Set();
 			_thread = new Thread(ProcessTasks);
 			_thread.Start();
@@ -114,12 +114,12 @@ public class PhysScheduler
 
 		public void Stop()
 		{
-			if (null==_thread)
+			if(null==_thread)
 			{
 				return;
 			}
 			_stop.Set();
-			if (_thread.Join(10000))
+			if(_thread.Join(10000))
 			{
 				//blocked?
 				_thread.Abort(); //very bad
@@ -131,7 +131,7 @@ public class PhysScheduler
 		public void AddTask(PhysicsTask task, int delay)
 		{
 			task.DueTime = _watch.ElapsedMilliseconds + delay;
-			lock (_tasks)
+			lock(_tasks)
 			{
 				_tasks.Add(task);
 			}

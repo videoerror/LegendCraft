@@ -1,4 +1,4 @@
-﻿//Copyright (C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
+﻿//Copyright(C) <2012>  <Jon Baker, Glenn Mariën and Lao Tszy>
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-//Copyright (C) <2012> Lao Tszy (lao_tszy@yahoo.co.uk)
+//Copyright(C) <2012> Lao Tszy(lao_tszy@yahoo.co.uk)
 
 using System;
 using System.Collections.Generic;
@@ -37,18 +37,18 @@ namespace fCraft
 
 		public TrackerUsageExample(World world)
 		{
-			if (null==world)
+			if(null==world)
 				throw new ArgumentNullException("world");
-			lock (world.SyncRoot)
+			lock(world.SyncRoot)
 			{
-				if (null==world.Map)
+				if(null==world.Map)
 					throw new ArgumentException("world.Map is null");
 				_world = world;
-				lock (_lock)
+				lock(_lock)
 				{
 					PlayerProximityTracker tracker = new PlayerProximityTracker(world.Map.Width, world.Map.Length, world);
 					_tracker.OnPlayersAtDistance += OnPlayersAtDistance;
-					//_tracker.SetCallEvents(true, 1, (p1, p2) => p1.IsZombi != p2.IsZombi);
+					//_tracker.SetCallEvents(true, 1,(p1, p2) => p1.IsZombi != p2.IsZombi);
 
 					Player.Moved += OnPlayerMoved;
 					Player.Disconnected += OnPlayerDisconnected;
@@ -59,9 +59,9 @@ namespace fCraft
 
 		public void OnPlayerMoved(object sender, PlayerMovedEventArgs args)
 		{
-			lock (_lock)
+			lock(_lock)
 			{
-				if (args.Player.World!=_world)
+				if(args.Player.World!=_world)
 				{//he left....chicken
 					//_tracker.RemovePlayer(args.Player); remove will not work since the guy definitely has different position now
 					//he will be removed from book keeping later in PlayerProximityTracker.FindPlayersAtDistance
@@ -73,7 +73,7 @@ namespace fCraft
 
 		public void OnPlayerDisconnected(object sender, PlayerDisconnectedEventArgs args)
 		{
-			lock (_lock)
+			lock(_lock)
 			{
 				//try to
 				_tracker.RemovePlayer(args.Player);
@@ -82,11 +82,11 @@ namespace fCraft
 
 		public void OnPlayerJoined(object sender, PlayerJoinedWorldEventArgs args)
 		{
-			lock (_lock)
+			lock(_lock)
 			{
-				if (args.NewWorld != args.OldWorld)
+				if(args.NewWorld != args.OldWorld)
 				{
-					if (_world == args.NewWorld)
+					if(_world == args.NewWorld)
 						_tracker.AddPlayer(args.Player, args.Player.Position.ToBlockCoords());
 				}
 			}
@@ -117,7 +117,7 @@ namespace fCraft
 		public PlayerProximityTracker(int xSize, int ySize, World world)
 		{
 			_players=new List<Player>[xSize, ySize];	
-			foreach (Player p in world.Players)
+			foreach(Player p in world.Players)
 			{
 				AddPlayer(p, p.Position.ToBlockCoords());
 			}
@@ -125,46 +125,46 @@ namespace fCraft
 
 		public void AddPlayer(Player p, Vector3I pos)
 		{
-			if (null == p)
+			if(null == p)
 			{
 				Logger.Log(LogType.Trace, "PlayerProximityTracker.AddPlayer: Player is null");
 				return;
 			}
 			CheckCoords(ref pos);
-			if (null == _players[pos.X, pos.Y])
+			if(null == _players[pos.X, pos.Y])
 				_players[pos.X, pos.Y] = new List<Player>();
 			_players[pos.X, pos.Y].Add(p);
 
-			if (_callEvents)
+			if(_callEvents)
 				CallEvent(p);
 		}
 
 		public void RemovePlayer(Player p)
 		{
-			if (null == p)
+			if(null == p)
 			{
 				Logger.Log(LogType.Trace, "PlayerProximityTracker.RemovePlayer: Player is null");
 				return;
 			}
 			Vector3I pos = p.Position.ToBlockCoords();
 			CheckCoords(ref pos);
-			if (null == _players[pos.X, pos.Y] || !_players[pos.X, pos.Y].Remove(p))
+			if(null == _players[pos.X, pos.Y] || !_players[pos.X, pos.Y].Remove(p))
 				Logger.Log(LogType.Trace, "PlayerProximityTracker.RemovePlayer: Player " + p.Name + " is not found at its position");
 		}
 
 		public void MovePlayer(Vector3I oldPos, Vector3I newPos, Player p)
 		{
-			//the new pos is given as an argument (assumed from PlayerMoved event args) so that the new position would match the previous in the next moved event
+			//the new pos is given as an argument(assumed from PlayerMoved event args) so that the new position would match the previous in the next moved event
 			CheckCoords(ref oldPos);
-            CheckCoords(ref newPos);
-            if (newPos.X == oldPos.X && newPos.Y == oldPos.Y) //nothing to do?
+			CheckCoords(ref newPos);
+			if(newPos.X == oldPos.X && newPos.Y == oldPos.Y) //nothing to do?
 				return;
 
-			if (null == _players[oldPos.X, oldPos.Y] || !_players[oldPos.X,oldPos.Y].Remove(p))
+			if(null == _players[oldPos.X, oldPos.Y] || !_players[oldPos.X,oldPos.Y].Remove(p))
 			{//this is not a fatal error, the player, even when existing at some wrong position will not be returned by the find call looking around this wrong position
 				Logger.Log(LogType.Error, "PlayerProximityTracker.MovePlayer: Player " + p.Name + " is not found at its previous position");
 			}
-            AddPlayer(p, newPos);
+			AddPlayer(p, newPos);
 		}
 
 		//may return null
@@ -181,27 +181,27 @@ namespace fCraft
 			List<Player> players=null;
 			
 			Vector3I pos = p.Position.ToBlockCoords();
-			for (int x=Math.Max(0, pos.X-d); x<=Math.Min(_players.GetLength(0)-1, pos.X+d); ++x)
-				for (int y=Math.Max(0, pos.Y-d); y<=Math.Min(_players.GetLength(1)-1, pos.Y+d); ++y)
+			for(int x=Math.Max(0, pos.X-d); x<=Math.Min(_players.GetLength(0)-1, pos.X+d); ++x)
+				for(int y=Math.Max(0, pos.Y-d); y<=Math.Min(_players.GetLength(1)-1, pos.Y+d); ++y)
 				{
-					if (null==_players[x, y])
+					if(null==_players[x, y])
 						continue;
-					for (int i = 0; i < _players[x, y].Count; ++i)
+					for(int i = 0; i < _players[x, y].Count; ++i)
 					{
 						Player player = _players[x, y][i];
-						if (ReferenceEquals(p, player)) //found THE player
+						if(ReferenceEquals(p, player)) //found THE player
 							continue;
-						if (!ReferenceEquals(_world, player.World)) //player has left the game world
+						if(!ReferenceEquals(_world, player.World)) //player has left the game world
 						{
 							_players[x, y].RemoveAt(i);
 							--i;
 							continue;
 						}
-						if (null != takePair && !takePair(p, player))
+						if(null != takePair && !takePair(p, player))
 							continue;
-						if ((p.Position.ToVector3I() - player.Position.ToVector3I()).LengthSquared > d) //too far away
+						if((p.Position.ToVector3I() - player.Position.ToVector3I()).LengthSquared > d) //too far away
 							continue;
-						if (null == players) //lasy instantiation
+						if(null == players) //lasy instantiation
 							players = new List<Player>();
 						players.Add(player);
 					}
@@ -220,12 +220,12 @@ namespace fCraft
 		private void CallEvent(Player p)
 		{
 			IEnumerable<Player> players = FindPlayersAtDistance(p, _distanceInBlocks, _takePair);
-			if (null!=players)
+			if(null!=players)
 			{
 				EventHandler<PlayersAtDistanceArgs> evt = OnPlayersAtDistance;
-				if (null!=evt)
+				if(null!=evt)
 				{
-					evt(this, new PlayersAtDistanceArgs(){FromPlayer=p, Others=players});
+					evt(this, new PlayersAtDistanceArgs() {FromPlayer=p, Others=players});
 				}
 			}
 		}
@@ -238,9 +238,9 @@ namespace fCraft
 
 		private void CheckDim(ref int coord, int dim)
 		{
-			if (coord < 0)
+			if(coord < 0)
 				coord = 0;
-			if (coord >= _players.GetLength(dim))
+			if(coord >= _players.GetLength(dim))
 				coord = _players.GetLength(dim) - 1;
 		}
 	}

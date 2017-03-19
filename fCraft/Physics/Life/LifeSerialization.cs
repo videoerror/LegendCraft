@@ -20,11 +20,11 @@ namespace fCraft
 			Object lockObj = null == w ? new object() : w.SyncRoot;
 
 			IEnumerable<Life2DZone> lifes;
-			lock (lockObj)
+			lock(lockObj)
 			{
 				lifes = map.LifeZones.Values.ToList(); //copies the current life list under a lock
 			}
-			foreach (Life2DZone life in lifes)
+			foreach(Life2DZone life in lifes)
 			{
 				converter.WriteMetadataEntry(_group[0], life.Name, life.Serialize(), writer);
 				++count;
@@ -37,16 +37,16 @@ namespace fCraft
 			try
 			{
 				Life2DZone life = Life2DZone.Deserialize(key, value, map);
-				if (map.LifeZones.ContainsKey(key.ToLower()))
+				if(map.LifeZones.ContainsKey(key.ToLower()))
 				{
 					Logger.Log(LogType.Error, "Map loading warning: duplicate life name found: " + key+", ignored");
 					return;
 				}
 				map.LifeZones.Add(key.ToLower(), life);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
-			    Logger.Log(LogType.Error, "LifeSerialization.Deserialize: Error deserializing life {0}: {1}", key, ex);
+				Logger.Log(LogType.Error, "LifeSerialization.Deserialize: Error deserializing life {0}: {1}", key, ex);
 			}
 		}
 	}
