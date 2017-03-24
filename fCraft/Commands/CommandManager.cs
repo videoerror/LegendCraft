@@ -56,10 +56,10 @@ namespace fCraft.Commands {
 			MathCommands.Init();
 
 			Logger.Log(LogType.Debug,
-			           "CommandManager: {0} commands registered({1} hidden, {2} aliases)",
-			           Commands.Count,
-			           GetCommands(true).Length,
-			           Aliases.Count);
+					   "CommandManager: {0} commands registered({1} hidden, {2} aliases)",
+					   Commands.Count,
+					   GetCommands(true).Length,
+					   Aliases.Count);
 		}
 
 		/// <summary>
@@ -97,7 +97,7 @@ namespace fCraft.Commands {
 		/// </summary>
 		public static CommandDescriptor[] GetCommands(CommandCategory category, bool includeHidden) {
 			return Commands.Values.Where(cmd =>(includeHidden || !cmd.IsHidden) &&
-			                             (cmd.Category & category) == category).ToArray();
+										 (cmd.Category & category) == category).ToArray();
 		}
 
 		/// <summary>
@@ -163,10 +163,10 @@ namespace fCraft.Commands {
 
 			if(Aliases.ContainsKey(normalizedName)) {
 				Logger.Log(LogType.Warning,
-				           "CommandManager.RegisterCommand: \"{0}\" was defined as an alias for \"{1}\", " +
-				           "but has now been replaced by a different command of the same name.",
-				           descriptor.Name,
-				           Aliases[descriptor.Name]);
+						   "CommandManager.RegisterCommand: \"{0}\" was defined as an alias for \"{1}\", " +
+						   "but has now been replaced by a different command of the same name.",
+						   descriptor.Name,
+						   Aliases[descriptor.Name]);
 
 				Aliases.Remove(normalizedName);
 			}
@@ -177,16 +177,16 @@ namespace fCraft.Commands {
 
 					if(ReservedCommandNames.Contains(normalizedAlias)) {
 						Logger.Log(LogType.Warning,
-						           "CommandManager.RegisterCommand: Alias \"{0}\" for \"{1}\" ignored(reserved name).",
-						           alias,
-						           descriptor.Name);
+								   "CommandManager.RegisterCommand: Alias \"{0}\" for \"{1}\" ignored(reserved name).",
+								   alias,
+								   descriptor.Name);
 					} else if(Aliases.ContainsKey(normalizedAlias)) {
 						Logger.Log(LogType.Warning,
-						           "CommandManager.RegisterCommand: \"{0}\" was defined as an alias for \"{1}\", " +
-						           "but has been overridden to resolve to \"{2}\" instead.",
-						           alias,
-						           Aliases[normalizedAlias],
-						           descriptor.Name);
+								   "CommandManager.RegisterCommand: \"{0}\" was defined as an alias for \"{1}\", " +
+								   "but has been overridden to resolve to \"{2}\" instead.",
+								   alias,
+								   Aliases[normalizedAlias],
+								   descriptor.Name);
 					} else {
 						Aliases.Add(normalizedAlias, normalizedName);
 					}

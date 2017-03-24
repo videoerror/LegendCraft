@@ -692,12 +692,12 @@ namespace fCraft.Commands {
 				}
 			} else if(message == "help") {
 				player.Message("_LegendCraft GlobalChat Network Help_\n" +
-				               "Ignore: Usage is '/global ignore'. Allows a user to ignore and stop using global chat." +
-				               "Type /global unignore to return to global chat. \n" +
-				               "Unignore: Usage is '/global unignore.' Allows a user to return to global chat. \n" +
-				               "Connect: For admins only. Usage is /global connect. Connects your server to the LegendCraft GlobalChat Network. \n" +
-				               "Disconnect: For admins only. Usage is /global disconnect. Disconnects your server from the LegendCraft GlobalChat Network. \n" +
-				               "Message: Usage is '/global <your message here>'. Will send your message to the rest of the servers connected to GlobalChat.");
+							   "Ignore: Usage is '/global ignore'. Allows a user to ignore and stop using global chat." +
+							   "Type /global unignore to return to global chat. \n" +
+							   "Unignore: Usage is '/global unignore.' Allows a user to return to global chat. \n" +
+							   "Connect: For admins only. Usage is /global connect. Connects your server to the LegendCraft GlobalChat Network. \n" +
+							   "Disconnect: For admins only. Usage is /global disconnect. Disconnects your server from the LegendCraft GlobalChat Network. \n" +
+							   "Message: Usage is '/global <your message here>'. Will send your message to the rest of the servers connected to GlobalChat.");
 
 				return;
 			}
@@ -708,12 +708,12 @@ namespace fCraft.Commands {
 				return;
 			} else if(!player.GlobalChatAllowed) {
 				player.Message("Global Chat Rules: By using global chat, you automatically agree to these terms and conditions. " +
-				               "Failure to agree may result in a global chat kick or ban. \n" +
-				               "1) No Spamming or deliberate insulting. \n" +
-				               "2) No advertising of any server or other minecraft related/unrelated service or product. \n" +
-				               "3) No discussion of illegal or partially illegal tasks is permitted. \n" +
-				               "4) Connecting bots to the Global Chat Network is not permitted, unless approved by the LegendCraft Team. \n" +
-				               "&aYou are now permitted to use /global on this server.");
+							   "Failure to agree may result in a global chat kick or ban. \n" +
+							   "1) No Spamming or deliberate insulting. \n" +
+							   "2) No advertising of any server or other minecraft related/unrelated service or product. \n" +
+							   "3) No discussion of illegal or partially illegal tasks is permitted. \n" +
+							   "4) Connecting bots to the Global Chat Network is not permitted, unless approved by the LegendCraft Team. \n" +
+							   "&aYou are now permitted to use /global on this server.");
 
 				player.GlobalChatAllowed = true;
 			} else if(message == null) {
@@ -885,7 +885,7 @@ namespace fCraft.Commands {
 					}
 				} else {
 					player.Message("&W You can only make players mad ranked {0}&W and below",
-					               player.Info.Rank.GetLimit(Permission.EditPlayerDB).ClassyName);
+								   player.Info.Rank.GetLimit(Permission.EditPlayerDB).ClassyName);
 				}
 			} catch(ArgumentNullException) {
 				player.Message("Expected format: /mad playername.");
@@ -1095,9 +1095,9 @@ namespace fCraft.Commands {
 				}								  
 			} else if(option == "help") {
 				player.Message("&eStopWatch: \n" +
-				               "&eStart: Will start the stopwatch. \n" +
-				               "&eStop: Will stop the stopwatch, reset it, and print out the total time. \n" +
-				               "&eTime: Will print out the current time that the stopwatch is at.");
+							   "&eStart: Will start the stopwatch. \n" +
+							   "&eStop: Will stop the stopwatch, reset it, and print out the total time. \n" +
+							   "&eTime: Will print out the current time that the stopwatch is at.");
 
 				return;
 			} else {
@@ -1176,7 +1176,7 @@ namespace fCraft.Commands {
 
 			if(DateTime.UtcNow < player.Info.MutedUntil) {
 				player.Message("You are muted for another {0:0} seconds.",
-				               player.Info.MutedUntil.Subtract(DateTime.UtcNow).TotalSeconds);
+							   player.Info.MutedUntil.Subtract(DateTime.UtcNow).TotalSeconds);
 
 				return;
 			}
@@ -1380,8 +1380,8 @@ namespace fCraft.Commands {
 			}
 
 			Server.Players.CanSee(target).Except(target).Message("{0}&S was just &chigh fived &Sby {1}&S",
-			                                                     target.ClassyName,
-			                                                     player.ClassyName);
+																 target.ClassyName,
+																 player.ClassyName);
 
 			IRC.PlayerSomethingMessage(player, "high fived", target, null);
 
@@ -1655,11 +1655,11 @@ namespace fCraft.Commands {
 			recepientList.Message(message);
 
 			var ReviewerNames = Server.Players.CanBeSeen(player).Where(r => r.Can(Permission.Promote,
-			                                                                      player.Info.Rank));
+																				  player.Info.Rank));
 			if(ReviewerNames.Count() > 0) {
 				player.Message("&WOnline players who can review you: {0}",
-				               ReviewerNames.JoinToString(r => String.Format("{0}&S",
-				                                              				 r.ClassyName)));
+							   ReviewerNames.JoinToString(r => String.Format("{0}&S",
+															  				 r.ClassyName)));
 
 				return;
 			} else {
@@ -1920,13 +1920,13 @@ namespace fCraft.Commands {
 			int finalNumber = rand.Next(min, max + 1);
 
 			Server.Message(player, "{0}{1} rolled {2}({3}...{4})",
-			               player.ClassyName, Color.Silver,
-			               finalNumber, min,
-			               max);
+						   player.ClassyName, Color.Silver,
+						   finalNumber, min,
+						   max);
 
 			player.Message("{0}You rolled {1}({2}...{3})", Color.Silver,
-			               finalNumber, min,
-			               max);
+						   finalNumber, min,
+						   max);
 		}
 		#endregion
 
@@ -2049,8 +2049,8 @@ namespace fCraft.Commands {
 
 					foreach(ChatTimer timer in list) {
 						player.Message(" #{0} \"{1}&S\"(started by {2}, {3} left)", timer.Id,
-						               timer.Message, timer.StartedBy,
-						               timer.TimeLeft.ToMiniString());
+									   timer.Message, timer.StartedBy,
+									   timer.TimeLeft.ToMiniString());
 					}
 				}
 
@@ -2070,8 +2070,8 @@ namespace fCraft.Commands {
 						timer.Stop();
 
 						string abortMsg = String.Format("&Y(Timer) {0}&Y aborted a timer with {1} left: {2}",
-						                                player.ClassyName, timer.TimeLeft.ToMiniString(),
-						                                timer.Message);
+														player.ClassyName, timer.TimeLeft.ToMiniString(),
+														timer.Message);
 
 						Chat.SendSay(player, abortMsg);
 					}
@@ -2112,13 +2112,13 @@ namespace fCraft.Commands {
 
 			if(String.IsNullOrEmpty(message)) {
 				sayMessage = String.Format("&Y(Timer) {0}&Y started a {1} timer",
-				                           player.ClassyName,
-				                           duration.ToMiniString());
+										   player.ClassyName,
+										   duration.ToMiniString());
 			} else {
 				sayMessage = String.Format("&Y(Timer) {0}&Y started a {1} timer: {2}",
-				                           player.ClassyName,
-				                           duration.ToMiniString(),
-				                           message);
+										   player.ClassyName,
+										   duration.ToMiniString(),
+										   message);
 			}
 
 			Chat.SendSay(player, sayMessage);
