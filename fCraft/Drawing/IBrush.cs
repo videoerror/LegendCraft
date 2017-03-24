@@ -1,6 +1,8 @@
 ﻿// Copyright 2009-2012 Matvei Stefarov <me@matvei.org>
 using JetBrains.Annotations;
 
+using fCraft.Commands;
+
 // ReSharper disable UnusedMemberInSuper.Global
 namespace fCraft.Drawing {
 

@@ -1,6 +1,7 @@
 ﻿// Copyright 2009-2012 Matvei Stefarov <me@matvei.org>
 using System;
 using JetBrains.Annotations;
+using fCraft.Commands;
 
 namespace fCraft.Drawing {
 	public sealed class CheckeredBrushFactory : IBrushFactory {

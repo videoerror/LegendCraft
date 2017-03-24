@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using JetBrains.Annotations;
+using fCraft.Commands;
 
 namespace fCraft.Drawing {
 	public sealed class MarbledBrushFactory : IBrushFactory {

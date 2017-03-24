@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Cache;
 using System.Threading;
+using fCraft.Commands;
 using fCraft.Drawing;
 using fCraft.Events;
 using System.Timers;

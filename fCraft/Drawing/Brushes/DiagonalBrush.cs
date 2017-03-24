@@ -3,6 +3,7 @@
 using System;
 using JetBrains.Annotations;
 using System.Collections.Generic;
+using fCraft.Commands;
 namespace fCraft.Drawing
 {
 	public sealed class DiagonalBrushFactory : IBrushFactory

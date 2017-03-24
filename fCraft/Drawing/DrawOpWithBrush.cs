@@ -1,5 +1,6 @@
 ﻿// Copyright 2009-2012 Matvei Stefarov <me@matvei.org>
 using System;
+using fCraft.Commands;
 
 namespace fCraft.Drawing {
 	/// <summary> A self-contained DrawOperation that prodivides its own brush.

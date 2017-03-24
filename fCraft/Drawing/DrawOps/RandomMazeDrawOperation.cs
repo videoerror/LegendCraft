@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using fCraft;
+using fCraft.Commands;
 using fCraft.Drawing;
 
 namespace RandomMaze
