@@ -26,6 +26,8 @@ namespace fCraft.Commands {
 			// CommandManager.RegisterCommand(CdSpell);
 		}
 
+		#region SPELL
+
 		private static readonly CommandDescriptor CdSpell = new CommandDescriptor() {
 			Name = "Spell",
 
@@ -62,5 +64,6 @@ namespace fCraft.Commands {
 				world.AddPhysicsTask(new Particle(world,(pos1 + 2 * direction).Round(), direction, player, Block.Obsidian, particleBehavior), 0);
 			}
 		}
+		#endregion
 	}
 }
