@@ -395,10 +395,14 @@ namespace fCraft.Commands {
 	}
 
 	public sealed class CommandRegistrationException : Exception {
-		public CommandRegistrationException(string message) : base(message) { }
+
+		public CommandRegistrationException(string message) : base(message) {
+		}
+
 		[StringFormatMethod("message")]
 		public CommandRegistrationException(string message, params object[] args) :
-			base(String.Format(message, args)) { }
+			base(String.Format(message, args)) {
+		}
 	}
 }
 
@@ -461,7 +465,8 @@ namespace fCraft.Events {
 
 	public sealed class CommandCallingEventArgs : CommandCalledEventArgs, ICancellableEvent {
 
-		internal CommandCallingEventArgs(Command command, CommandDescriptor commandDescriptor, Player player) : base(command, commandDescriptor, player) {
+		internal CommandCallingEventArgs(Command command, CommandDescriptor commandDescriptor, Player player) :
+			base(command, commandDescriptor, player) {
 		}
 
 		public bool Cancel {
