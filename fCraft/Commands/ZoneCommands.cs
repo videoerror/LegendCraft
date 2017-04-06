@@ -228,15 +228,15 @@ namespace fCraft.Commands {
 			player.WorldMap.Zones.Add(door);
 
 			Logger.Log(LogType.UserActivity,
-			           "{0} created door {1}(on world {2})",
-			           player.Name,
-			           door.Name,
-			           player.World.Name);
+					   "{0} created door {1}(on world {2})",
+					   player.Name,
+					   door.Name,
+					   player.World.Name);
 
 			player.Message("Door created: {0}x{1}x{2}",
-			               door.Bounds.Dimensions.X,
-			               door.Bounds.Dimensions.Y,
-			               door.Bounds.Dimensions.Z);
+						   door.Bounds.Dimensions.X,
+						   door.Bounds.Dimensions.Y,
+						   door.Bounds.Dimensions.Z);
 		}
 		#endregion
 
@@ -301,20 +301,20 @@ namespace fCraft.Commands {
 			Zone[] allowed = null, denied = null;
 
 			if(e.Player.WorldMap.Zones.CheckDetailed(e.Coords, e.Player,
-			                                         out allowed, out denied)) {
+													 out allowed, out denied)) {
 				foreach(Zone zone in allowed) {
 					if(zone.Name.StartsWith("Door_")) {
 						Player.RaisePlayerPlacedBlockEvent(e.Player, e.Player.WorldMap,
-						                                   e.Coords, e.Block,
-						                                   e.Block, BlockChangeContext.Manual);
+														   e.Coords, e.Block,
+														   e.Block, BlockChangeContext.Manual);
 
 						// If player is checking a door, print the door info instead of opening it.
 						if(e.Player.Info.isDoorChecking) {
 							e.Player.Message(zone.Name);
 
 							e.Player.Message("Created by {0} on {1}",
-							                 zone.CreatedBy,
-							                 zone.CreatedDate);
+											 zone.CreatedBy,
+											 zone.CreatedDate);
 
 							return;
 						}
@@ -426,13 +426,13 @@ namespace fCraft.Commands {
 				switch(buildCheck) {
 					case SecurityCheckResult.BlackListed:
 						player.Message("Cannot add zones to world {0}&S: You are barred from building here.",
-						               playerWorld.ClassyName);
+									   playerWorld.ClassyName);
 
 						return;
 					
 					case SecurityCheckResult.RankTooLow:
 						player.Message("Cannot add zones to world {0}&S: You are not allowed to build here.",
-						               playerWorld.ClassyName);
+									   playerWorld.ClassyName);
 
 						return;
 					
@@ -468,8 +468,8 @@ namespace fCraft.Commands {
 				newZone.Controller.Include(info);
 
 				player.Message("Zone: Creating a {0}+&S zone for player {1}&S.",
-				               newZone.Controller.MinRank.ClassyName,
-				               info.ClassyName);
+							   newZone.Controller.MinRank.ClassyName,
+							   info.ClassyName);
 			} else {
 				// Adding an ordinary, rank-restricted zone.
 				if(!World.IsValidName(givenZoneName)) {
@@ -550,13 +550,13 @@ namespace fCraft.Commands {
 				switch(buildCheck) {
 					case SecurityCheckResult.BlackListed:
 						player.Message("Cannot add zones to world {0}&S: You are barred from building here.",
-						               playerWorld.ClassyName);
+									   playerWorld.ClassyName);
 
 						return;
 					
 					case SecurityCheckResult.RankTooLow:
 						player.Message("Cannot add zones to world {0}&S: You are not allowed to build here.",
-						               playerWorld.ClassyName);
+									   playerWorld.ClassyName);
 
 						return;
 					
@@ -573,8 +573,8 @@ namespace fCraft.Commands {
 
 				if(dupeZone != null) {
 					player.Message("A zone named \"{0}\" has just been created by {1}",
-					               dupeZone.Name,
-					               dupeZone.CreatedBy);
+								   dupeZone.Name,
+								   dupeZone.CreatedBy);
 
 					return;
 				}
@@ -582,14 +582,14 @@ namespace fCraft.Commands {
 				zone.Create(new BoundingBox(marks[0], marks[1]), player.Info);
 
 				player.Message("Zone \"{0}\" created, {1} blocks total.",
-				               zone.Name,
-				               zone.Bounds.Volume);
+							   zone.Name,
+							   zone.Bounds.Volume);
 
 				Logger.Log(LogType.UserActivity,
-				           "Player {0} created a new zone \"{1}\" containing {2} blocks.",
-				           player.Name,
-				           zone.Name,
-				           zone.Bounds.Volume);
+						   "Player {0} created a new zone \"{1}\" containing {2} blocks.",
+						   player.Name,
+						   zone.Name,
+						   zone.Bounds.Volume);
 
 				zones.Add(zone);
 			}
@@ -654,7 +654,7 @@ namespace fCraft.Commands {
 					if(!player.Info.Rank.AllowSecurityCircumvention && player.Info == info) {
 						if(!zone.Controller.Check(info)) {
 							player.Message("You must be {0}+&S to add yourself to this zone's whitelist.",
-							               zone.Controller.MinRank.ClassyName);
+										   zone.Controller.MinRank.ClassyName);
 
 							continue;
 						}
@@ -663,8 +663,8 @@ namespace fCraft.Commands {
 					switch(zone.Controller.Include(info)) {
 						case PermissionOverride.None:
 							player.Message("{0}&S is now included in zone {1}",
-							               info.ClassyName,
-							               zone.ClassyName);
+										   info.ClassyName,
+										   zone.ClassyName);
 
 							changesWereMade = true;
 
@@ -672,15 +672,15 @@ namespace fCraft.Commands {
 						
 						case PermissionOverride.Allow:
 							player.Message("{0}&S is already included in zone {1}",
-							               info.ClassyName,
-							               zone.ClassyName);
+										   info.ClassyName,
+										   zone.ClassyName);
 
 							break;
 						
 						case PermissionOverride.Deny:
 							player.Message("{0}&S is no longer excluded from zone {1}",
-							               info.ClassyName,
-							               zone.ClassyName);
+										   info.ClassyName,
+										   zone.ClassyName);
 
 							changesWereMade = true;
 
@@ -702,8 +702,8 @@ namespace fCraft.Commands {
 					switch(zone.Controller.Exclude(info)) {
 						case PermissionOverride.None:
 							player.Message("{0}&S is now excluded from zone {1}",
-							               info.ClassyName,
-							               zone.ClassyName);
+										   info.ClassyName,
+										   zone.ClassyName);
 
 							changesWereMade = true;
 
@@ -711,8 +711,8 @@ namespace fCraft.Commands {
 						
 						case PermissionOverride.Allow:
 							player.Message("{0}&S is no longer included in zone {1}",
-							               info.ClassyName,
-							               zone.ClassyName);
+										   info.ClassyName,
+										   zone.ClassyName);
 
 							changesWereMade = true;
 
@@ -720,8 +720,8 @@ namespace fCraft.Commands {
 						
 						case PermissionOverride.Deny:
 							player.Message("{0}&S is already excluded from zone {1}",
-							               info.ClassyName,
-							               zone.ClassyName);
+										   info.ClassyName,
+										   zone.ClassyName);
 
 							break;
 					}
@@ -748,8 +748,8 @@ namespace fCraft.Commands {
 						if(zone.Controller.MinRank != minRank) {
 							zone.Controller.MinRank = minRank;
 							player.Message("Permission for zone \"{0}\" changed to {1}+",
-							               zone.Name,
-							               minRank.ClassyName);
+										   zone.Name,
+										   minRank.ClassyName);
 
 							changesWereMade = true;
 						}
@@ -805,42 +805,42 @@ namespace fCraft.Commands {
 			}
 
 			player.Message("About zone \"{0}\": size {1} x {2} x {3}, contains {4} blocks, editable by {5}+.",
-			               zone.Name,
-			               zone.Bounds.Width,
-			               zone.Bounds.Length,
-			               zone.Bounds.Height,
-			               zone.Bounds.Volume,
-			               zone.Controller.MinRank.ClassyName);
+						   zone.Name,
+						   zone.Bounds.Width,
+						   zone.Bounds.Length,
+						   zone.Bounds.Height,
+						   zone.Bounds.Volume,
+						   zone.Controller.MinRank.ClassyName);
 			player.Message("  Zone center is at({0},{1},{2}).",
-			               (zone.Bounds.XMin + zone.Bounds.XMax) / 2,
-			               (zone.Bounds.YMin + zone.Bounds.YMax) / 2,
-			               (zone.Bounds.ZMin + zone.Bounds.ZMax) / 2);
+						   (zone.Bounds.XMin + zone.Bounds.XMax) / 2,
+						   (zone.Bounds.YMin + zone.Bounds.YMax) / 2,
+						   (zone.Bounds.ZMin + zone.Bounds.ZMax) / 2);
 
 			if(zone.CreatedBy != null) {
 				player.Message("  Zone created by {0}&S on {1:MMM d} at {1:h:mm}({2} ago).",
-				               zone.CreatedByClassy,
-				               zone.CreatedDate,
-				               DateTime.UtcNow.Subtract(zone.CreatedDate).ToMiniString());
+							   zone.CreatedByClassy,
+							   zone.CreatedDate,
+							   DateTime.UtcNow.Subtract(zone.CreatedDate).ToMiniString());
 			}
 
 			if(zone.EditedBy != null) {
 				player.Message("  Zone last edited by {0}&S on {1:MMM d} at {1:h:mm}({2}d {3}h ago).",
-				               zone.EditedByClassy,
-				               zone.EditedDate,
-				               DateTime.UtcNow.Subtract(zone.EditedDate).Days,
-				               DateTime.UtcNow.Subtract(zone.EditedDate).Hours);
+							   zone.EditedByClassy,
+							   zone.EditedDate,
+							   DateTime.UtcNow.Subtract(zone.EditedDate).Days,
+							   DateTime.UtcNow.Subtract(zone.EditedDate).Hours);
 			}
 
 			PlayerExceptions zoneExceptions = zone.ExceptionList;
 
 			if(zoneExceptions.Included.Length > 0) {
 				player.Message("  Zone whitelist includes: {0}",
-				               zoneExceptions.Included.JoinToClassyString());
+							   zoneExceptions.Included.JoinToClassyString());
 			}
 
 			if(zoneExceptions.Excluded.Length > 0) {
 				player.Message("  Zone blacklist excludes: {0}",
-				               zoneExceptions.Excluded.JoinToClassyString());
+							   zoneExceptions.Excluded.JoinToClassyString());
 			}
 
 			if(null != zone.Message) {
@@ -881,7 +881,7 @@ namespace fCraft.Commands {
 				}
 
 				player.Message("List of zones on {0}&S:",
-				               world.ClassyName);
+							   world.ClassyName);
 
 			} else if(world != null) {
 				player.Message("List of zones on this world:");
@@ -897,7 +897,7 @@ namespace fCraft.Commands {
 			if(map == null) {
 				if(!MapUtility.TryLoadHeader(world.MapFileName, out map)) {
 					player.Message("&WERROR:Could not load mapfile for world {0}.",
-					               world.ClassyName);
+								   world.ClassyName);
 
 					return;
 				}
@@ -908,11 +908,11 @@ namespace fCraft.Commands {
 			if(zones.Length > 0) {
 				foreach(Zone zone in zones) {
 					player.Message("   {0}({1}&S) - {2} x {3} x {4}",
-					               zone.Name,
-					               zone.Controller.MinRank.ClassyName,
-					               zone.Bounds.Width,
-					               zone.Bounds.Length,
-					               zone.Bounds.Height);
+								   zone.Name,
+								   zone.Controller.MinRank.ClassyName,
+								   zone.Bounds.Width,
+								   zone.Bounds.Length,
+								   zone.Bounds.Height);
 				}
 
 				player.Message("   Type &H/ZInfo ZoneName&S for details.");
@@ -1004,13 +1004,13 @@ namespace fCraft.Commands {
 					switch(zone.Controller.CheckDetailed(player.Info)) {
 						case SecurityCheckResult.BlackListed:
 							player.Message("You are not allowed to remove zone {0}: you are blacklisted.",
-							               zone.ClassyName);
+										   zone.ClassyName);
 
 							return;
 						
 						case SecurityCheckResult.RankTooLow:
 							player.Message("You are not allowed to remove zone {0}.",
-							               zone.ClassyName);
+										   zone.ClassyName);
 
 							return;
 					}
@@ -1105,16 +1105,16 @@ namespace fCraft.Commands {
 
 			// Announce the rename.
 			playerWorld.Players.Message("&SZone \"{0}\" was renamed to \"{1}&S\" by {2}",
-			                            fullOldName,
-			                            oldZone.ClassyName,
-			                            player.ClassyName);
+										fullOldName,
+										oldZone.ClassyName,
+										player.ClassyName);
 
 			Logger.Log(LogType.UserActivity,
-			           "Player {0} renamed zone \"{1}\" to \"{2}\" on world {3}",
-			           player.Name,
-			           fullOldName,
-			           newName,
-			           playerWorld.Name);
+					   "Player {0} renamed zone \"{1}\" to \"{2}\" on world {3}",
+					   player.Name,
+					   fullOldName,
+					   newName,
+					   playerWorld.Name);
 		}
 		#endregion
 
