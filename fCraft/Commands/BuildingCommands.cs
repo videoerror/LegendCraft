@@ -316,7 +316,7 @@ namespace fCraft.Commands {
 		   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 		   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 		   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-		   THE SOFTWARE.*/
+		   THE SOFTWARE. */
 
 		private static readonly CommandDescriptor CdAbortAll = new CommandDescriptor() {
 			Name = "AbortAll",
@@ -1292,12 +1292,12 @@ namespace fCraft.Commands {
 			if(replacementBlockName == null) {
 				if(player.GetBind(originalBlock) != originalBlock) {
 					player.Message("{0} is no longer bound to {1}",
-					               originalBlock, player.GetBind(originalBlock));
+								   originalBlock, player.GetBind(originalBlock));
 
 					player.ResetBind(originalBlock);
 				} else {
 					player.Message("{0} is not bound to anything.",
-					               originalBlock);
+								   originalBlock);
 				}
 
 				return;
@@ -1499,7 +1499,7 @@ namespace fCraft.Commands {
 		#endregion
 
 		private static void DrawOneBlock([NotNull] Player player, [NotNull] Map map, Block drawBlock, Vector3I coord,
-		                                 BlockChangeContext context, ref int blocks, ref int blocksDenied, UndoState undoState) {
+										 BlockChangeContext context, ref int blocks, ref int blocksDenied, UndoState undoState) {
 			if(player == null) {
 				throw new ArgumentNullException("player");
 			}
@@ -1549,7 +1549,7 @@ namespace fCraft.Commands {
 			} else {
 				if(blocksDenied > 0) {
 					player.MessageNow("{0} {1} blocks({2} blocks skipped due to permission issues)... " +
-					                  "The map is now being updated.", verb, blocks, blocksDenied);
+									  "The map is now being updated.", verb, blocks, blocksDenied);
 				} else {
 					player.MessageNow("{0} {1} blocks... The map is now being updated.", verb, blocks);
 				}
@@ -1606,7 +1606,7 @@ namespace fCraft.Commands {
 
 			if(!player.CanDraw(volume)) {
 				player.MessageNow(String.Format("You are only allowed to run commands that affect up to {0} blocks. This one would affect {1} blocks.",
-				                                player.Info.Rank.DrawLimit, volume));
+												player.Info.Rank.DrawLimit, volume));
 
 				return;
 			}
@@ -1637,16 +1637,16 @@ namespace fCraft.Commands {
 			player.SetCopyInformation(copyInfo);
 
 			player.MessageNow("{0} blocks copied into slot #{1}. You can now &H/Paste",
-			                  volume, player.CopySlot + 1);
+							  volume, player.CopySlot + 1);
 			player.MessageNow("Origin at {0} {1}{2} corner.",
-			                  (copyInfo.Orientation.X == 1 ? "bottom" : "top"),
-			                  (copyInfo.Orientation.Y == 1 ? "south" : "north"),
-			                  (copyInfo.Orientation.Z == 1 ? "east" : "west"));
+							  (copyInfo.Orientation.X == 1 ? "bottom" : "top"),
+							  (copyInfo.Orientation.Y == 1 ? "south" : "north"),
+							  (copyInfo.Orientation.Z == 1 ? "east" : "west"));
 
 			Logger.Log(LogType.UserActivity,
-			           "{0} copied {1} blocks from {2}(between {3} and {4}).",
-			           player.Name, volume, playerWorld.Name,
-			           bounds.MinVertex, bounds.MaxVertex);
+					   "{0} copied {1} blocks from {2}(between {3} and {4}).",
+					   player.Name, volume, playerWorld.Name,
+					   bounds.MinVertex, bounds.MaxVertex);
 		}
 
 		private static readonly CommandDescriptor CdCopySlot = new CommandDescriptor() {
@@ -1689,23 +1689,23 @@ namespace fCraft.Commands {
 						player.Message("Selected copy slot {0}(unused).", slotNumber);
 					} else {
 						player.Message("Selected copy slot {0}: {1} blocks from {2}, {3} old.",
-						               slotNumber, info.Buffer.Length,
-						               info.OriginWorld, DateTime.UtcNow.Subtract(info.CopyTime).ToMiniString());
+									   slotNumber, info.Buffer.Length,
+									   info.OriginWorld, DateTime.UtcNow.Subtract(info.CopyTime).ToMiniString());
 					}
 				}
 			} else {
 				CopyState[] slots = player.CopyInformation;
 
 				player.Message("Using {0} of {1} slots. Selected slot: {2}",
-				               slots.Count(info => info != null),
-				               player.Info.Rank.CopySlots,
-				               player.CopySlot + 1);
+							   slots.Count(info => info != null),
+							   player.Info.Rank.CopySlots,
+							   player.CopySlot + 1);
 
 				for(int i = 0; i < slots.Length; i++) {
 					if(slots[i] != null) {
 						player.Message("  {0}: {1} blocks from {2}, {3} old",
-						               i + 1, slots[i].Buffer.Length,
-						               slots[i].OriginWorld, DateTime.UtcNow.Subtract(slots[i].CopyTime).ToMiniString());
+									   i + 1, slots[i].Buffer.Length,
+									   slots[i].OriginWorld, DateTime.UtcNow.Subtract(slots[i].CopyTime).ToMiniString());
 					}
 				}
 			}
@@ -1759,7 +1759,7 @@ namespace fCraft.Commands {
 
 			if(fillBlock != Block.Air) {
 				player.Message("Cut/{0}: Click 2 blocks or use &H/Mark&S to make a selection.",
-				               fillBlock);
+							   fillBlock);
 			} else {
 				player.Message("Cut: Click 2 blocks or use &H/Mark&S to make a selection.");
 			}
@@ -2210,7 +2210,7 @@ namespace fCraft.Commands {
 			}
 
 			player.Message("Rotated copy(slot {0}) by {1} degrees around {2} axis.",
-			               info.Slot + 1, degrees, axis);
+						   info.Slot + 1, degrees, axis);
 
 			player.SetCopyInformation(info);
 		}
@@ -2716,19 +2716,19 @@ namespace fCraft.Commands {
 				redoState.Op.Cancel();
 
 				msg += String.Format("Cancelled {0}(was {1}% done). ",
-				                     redoState.Op.Description,
-				                     redoState.Op.PercentDone);
+									 redoState.Op.Description,
+									 redoState.Op.PercentDone);
 			}
 
 			// No need to set player.drawingInProgress here because this is done on the user thread.
 			Logger.Log(LogType.UserActivity,
-			           "Player {0} initiated /Redo affecting {1} blocks(on world {2})",
-			           player.Name,
-			           redoState.Buffer.Count,
-			           playerWorld.Name);
+					   "Player {0} initiated /Redo affecting {1} blocks(on world {2})",
+					   player.Name,
+					   redoState.Buffer.Count,
+					   playerWorld.Name);
 
 			msg += String.Format("Restoring {0} blocks. Type &H/Undo&S to reverse.",
-			                     redoState.Buffer.Count);
+								 redoState.Buffer.Count);
 
 			player.MessageNow(msg);
 
@@ -2782,8 +2782,8 @@ namespace fCraft.Commands {
 				undoState.Op.Cancel();
 
 				msg += String.Format("Cancelled {0}(was {1}% done). ",
-				                     undoState.Op.Description,
-				                     undoState.Op.PercentDone);
+									 undoState.Op.Description,
+									 undoState.Op.PercentDone);
 			}
 
 			// Check if command was too massive.
@@ -2800,14 +2800,14 @@ namespace fCraft.Commands {
 			// No need to set player.drawingInProgress here because this is done on the user thread.
 			if(Updater.CurrentRelease.IsFlagged(ReleaseFlags.Dev)) {
 				Logger.Log(LogType.UserActivity,
-				           "Player {0} initiated /Undo affecting {1} blocks(on world {2})",
-				           player.Name,
-				           undoState.Buffer.Count,
-				           playerWorld.Name);
+						   "Player {0} initiated /Undo affecting {1} blocks(on world {2})",
+						   player.Name,
+						   undoState.Buffer.Count,
+						   playerWorld.Name);
 			}
 
 			msg += String.Format("Restoring {0} blocks. Type &H/Redo&S to reverse.",
-			                     undoState.Buffer.Count);
+								 undoState.Buffer.Count);
 
 			player.MessageNow(msg);
 
